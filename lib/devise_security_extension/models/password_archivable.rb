@@ -26,7 +26,7 @@ module Devise
         #   end
         # end
 
-        if self.class.deny_old_passwords > 0 and not self.password.nil?
+        if self.class.deny_old_passwords and not self.password.nil?
           # old_passwords_including_cur_change = self.old_passwords.order(:id).reverse_order.limit(self.class.deny_old_passwords)
 	  old_passwords_including_cur_change = self.old_passwords.order(:id).reverse_order.where(created_at: [1.year.ago..DateTime.now])
           old_passwords_including_cur_change << OldPassword.new(old_password_params)  # include most recent change in list, but don't save it yet!
